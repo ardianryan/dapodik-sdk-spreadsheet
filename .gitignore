@@ -1,0 +1,12 @@
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Office temporary files
+~$*
+*.tmp
+
+# Secrets
+*.token
+.env
+.env.local
