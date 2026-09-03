@@ -53,8 +53,18 @@ function DapodikClient(config) {
     throw new Error("DapodikClient Error: 'npsn' dan 'token' wajib diisi.");
   }
 
-  this.npsn = String(config.npsn).trim();
-  this.token = String(config.token).trim();
+  var npsnStr = String(config.npsn).trim();
+  var tokenStr = String(config.token).trim();
+
+  if (/[\r\n]/.test(npsnStr)) {
+    throw new Error("DapodikClient Error: NPSN tidak boleh mengandung karakter newline.");
+  }
+  if (/[\r\n]/.test(tokenStr)) {
+    throw new Error("DapodikClient Error: Token tidak boleh mengandung karakter newline (CRLF injection prevention).");
+  }
+
+  this.npsn = npsnStr;
+  this.token = tokenStr;
   this.timeout = config.timeout || 30000;
 
   if (config.baseUrl) {
@@ -74,6 +84,9 @@ function DapodikClient(config) {
  */
 DapodikClient.prototype.request = function(method, endpoint, params, body) {
   var cleanEndpoint = endpoint.replace(/^\/+/, "");
+  if (cleanEndpoint.indexOf("..") !== -1 || cleanEndpoint.indexOf("\\") !== -1) {
+    throw new Error("DapodikClient Error: Endpoint tidak valid (path traversal detected).");
+  }
   var queryObj = { npsn: this.npsn };
   
   if (params && typeof params === "object") {

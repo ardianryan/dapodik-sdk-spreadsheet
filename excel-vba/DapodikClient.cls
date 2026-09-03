@@ -32,6 +32,12 @@ Private Sub Class_Initialize()
 End Sub
 
 Public Sub Init(ByVal npsn As String, ByVal token As String, Optional ByVal host As String = "127.0.0.1", Optional ByVal port As String = "5774")
+    If InStr(npsn, vbCr) > 0 Or InStr(npsn, vbLf) > 0 Then
+        Err.Raise vbObjectError + 511, "DapodikClient", "NPSN tidak boleh mengandung karakter newline."
+    End If
+    If InStr(token, vbCr) > 0 Or InStr(token, vbLf) > 0 Then
+        Err.Raise vbObjectError + 512, "DapodikClient", "Token tidak boleh mengandung karakter newline (CRLF injection prevention)."
+    End If
     pNpsn = Trim(npsn)
     pToken = Trim(token)
     pHost = Trim(host)
@@ -70,6 +76,9 @@ Public Function Request(ByVal method As String, ByVal endpoint As String, Option
 
     cleanEndpoint = endpoint
     If Left(cleanEndpoint, 1) = "/" Then cleanEndpoint = Mid(cleanEndpoint, 2)
+    If InStr(cleanEndpoint, "..") > 0 Or InStr(cleanEndpoint, "\") > 0 Then
+        Err.Raise vbObjectError + 515, "DapodikClient", "Endpoint tidak valid (path traversal detected)."
+    End If
     
     fullUrl = pBaseUrl & "/" & cleanEndpoint & "?npsn=" & pNpsn
     If queryParams <> "" Then
