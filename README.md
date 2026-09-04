@@ -5,7 +5,8 @@
 <h1 align="center">dapodik-sdk-spreadsheet</h1>
 
 <p align="center">
-  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square" alt="License: MIT" /></a>
+  <a href="https://github.com/ardianryan/dapodik-sdk-spreadsheet/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/ardianryan/dapodik-sdk-spreadsheet/ci.yml?branch=main&style=flat-square&label=CI" alt="CI Status" /></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT--NC-blue.svg?style=flat-square" alt="License: MIT-NC" /></a>
   <a href="https://developers.google.com/apps-script"><img src="https://img.shields.io/badge/Google%20Apps%20Script-Ready-4285F4.svg?style=flat-square&logo=google" alt="Google Apps Script Ready" /></a>
   <a href="https://learn.microsoft.com/en-us/office/vba/api/overview/excel"><img src="https://img.shields.io/badge/Excel%20VBA-Ready-107C41.svg?style=flat-square&logo=microsoftexcel" alt="Excel VBA Ready" /></a>
   <a href="https://www.instagram.com/smansagewithai/"><img src="https://img.shields.io/badge/Instagram-@smansagewithai-E4405F.svg?style=flat-square&logo=instagram&logoColor=white" alt="Instagram" /></a>

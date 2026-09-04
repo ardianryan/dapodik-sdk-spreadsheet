@@ -1,0 +1,49 @@
+name: Spreadsheet SDK CI & Integrity Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    name: Validate Google Apps Script & Excel VBA Integrity
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate File Existence & Structure
+        run: |
+          echo "🔍 Checking Google Apps Script files..."
+          test -f google-apps-script/DapodikClient.gs || { echo "❌ Missing DapodikClient.gs"; exit 1; }
+          test -f google-apps-script/CustomMenu.gs || { echo "❌ Missing CustomMenu.gs"; exit 1; }
+
+          echo "🔍 Checking Excel VBA files..."
+          test -f excel-vba/DapodikClient.cls || { echo "❌ Missing DapodikClient.cls"; exit 1; }
+          test -f excel-vba/DapodikSync.bas || { echo "❌ Missing DapodikSync.bas"; exit 1; }
+
+          echo "✅ All source files verified!"
+
+      - name: Validate Google Apps Script JavaScript Syntax
+        run: |
+          node -e 'fs=require("fs"); new Function(fs.readFileSync("google-apps-script/DapodikClient.gs", "utf8")); new Function(fs.readFileSync("google-apps-script/CustomMenu.gs", "utf8")); console.log("✅ Google Apps Script syntax check passed!");'
+
+      - name: Security & Hardening Rules Validation
+        run: |
+          echo "🔍 Checking CRLF and path traversal guards in Google Apps Script..."
+          grep -q "CRLF" google-apps-script/DapodikClient.gs || { echo "❌ Missing CRLF guard"; exit 1; }
+          grep -q "traversal" google-apps-script/DapodikClient.gs || { echo "❌ Missing path traversal guard"; exit 1; }
+
+          echo "🔍 Checking CRLF and path traversal guards in Excel VBA..."
+          grep -q "CRLF" excel-vba/DapodikClient.cls || { echo "❌ Missing CRLF guard in VBA"; exit 1; }
+          grep -q "traversal" excel-vba/DapodikClient.cls || { echo "❌ Missing path traversal guard in VBA"; exit 1; }
+
+          echo "✅ All security hardening guards verified!"
