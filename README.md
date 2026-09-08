@@ -38,11 +38,11 @@
 
 - 📊 **Dukungan Google Spreadsheet (Google Apps Script)**:
   - Menu kustom otomatis di UI Google Sheets: **`🎓 Dapodik Kemendikdasmen`**.
-  - Tarik data Siswa, GTK, Rombel, dan Profil Sekolah langsung ke Sheet hanya dengan 1 klik.
+  - Tarik data Siswa, GTK, Rombel, Prasarana & Bangunan, dan Profil Sekolah langsung ke Sheet hanya dengan 1 klik.
   - Penataan tabel dan pewarnaan header otomatis (*auto-styling & freezing header*).
 - 📗 **Dukungan Microsoft Excel (VBA Macro `.xlsm`)**:
-  - Class Module `DapodikClient.cls` berbasis `MSXML2.ServerXMLHTTP`.
-  - Macro otomatis `DapodikSync.bas` untuk sinkronisasi data offline di komputer Windows operator sekolah.
+  - Class Module `DapodikClient.cls` berbasis `MSXML2.ServerXMLHTTP` (termasuk method `GetPrasarana()`).
+  - Macro otomatis `DapodikSync.bas` (`TarikDataSiswa()`, `TarikDataPrasarana()`) untuk sinkronisasi data offline di komputer Windows operator sekolah.
 - 🛡️ **Kepatuhan UU PDP No. 27/2022**: Panduan isolasi token dan perlindungan data siswa/guru.
 
 ---

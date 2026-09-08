@@ -6,6 +6,13 @@ Format changelog ini mengacu pada [Keep a Changelog](https://keepachangelog.com/
 
 ---
 
+## [1.1.0] - 2026-09-08
+
+### Ditambahkan
+- **Dukungan Endpoint Resmi `/getPrasarana`**:
+  - Google Apps Script: Penambahan method `getPrasarana()`, helper `syncPrasaranaToSheet()`, dan menu UI `📥 Tarik Prasarana & Bangunan`.
+  - Microsoft Excel VBA: Penambahan `GetPrasarana()` pada `DapodikClient.cls` dan Macro `TarikDataPrasarana()` pada `DapodikSync.bas`.
+
 ## [1.0.0] - 2026-08-30
 
 ### Ditambahkan
