@@ -10,6 +10,7 @@ function onOpen() {
     .addItem("📥 Tarik Semua Guru & Tendik (GTK)", "menuSyncGtk")
     .addItem("📥 Tarik Profil Sekolah", "menuSyncSekolah")
     .addItem("📥 Tarik Rombongan Belajar (Rombel)", "menuSyncRombel")
+    .addItem("📥 Tarik Prasarana & Bangunan", "menuSyncPrasarana")
     .addSeparator()
     .addItem("⚙️ Setup Sheet Konfigurasi Token", "menuSetupConfigSheet")
     .addToUi();
@@ -97,3 +98,19 @@ function menuSyncRombel() {
     ui.alert("Gagal Sinkronisasi Rombel: " + e.message);
   }
 }
+
+function menuSyncPrasarana() {
+  var ui = SpreadsheetApp.getUi();
+  try {
+    var client = Dapodik.fromConfigSheet("Config");
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheetByName("Data Prasarana") || ss.insertSheet("Data Prasarana");
+    
+    SpreadsheetApp.getActiveSpreadsheet().toast("Sedang menarik data prasarana dari Dapodik...", "Proses Sinkronisasi", -1);
+    var total = client.syncPrasaranaToSheet(sheet);
+    SpreadsheetApp.getActiveSpreadsheet().toast("Berhasil menarik " + total + " data prasarana!", "Selesai", 5);
+  } catch (e) {
+    ui.alert("Gagal Sinkronisasi Prasarana: " + e.message);
+  }
+}
+

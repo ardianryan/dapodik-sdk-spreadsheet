@@ -215,6 +215,13 @@ DapodikClient.prototype.getMatevNilai = function(semesterId, params) {
   return this.request("get", "getMatevNilai", p);
 };
 
+DapodikClient.prototype.getPrasarana = function(page, limit, params) {
+  var p = params || {};
+  if (page) p.page = page;
+  if (limit) p.limit = limit;
+  return this.request("get", "getPrasarana", p);
+};
+
 // Aliases
 DapodikClient.prototype.sekolah = DapodikClient.prototype.getSekolah;
 DapodikClient.prototype.pengguna = DapodikClient.prototype.getPengguna;
@@ -223,6 +230,7 @@ DapodikClient.prototype.rombel = DapodikClient.prototype.getRombonganBelajar;
 DapodikClient.prototype.pd = DapodikClient.prototype.getPesertaDidik;
 DapodikClient.prototype.mataPelajaran = DapodikClient.prototype.getMataPelajaran;
 DapodikClient.prototype.matevNilai = DapodikClient.prototype.getMatevNilai;
+DapodikClient.prototype.prasarana = DapodikClient.prototype.getPrasarana;
 
 // =============================================================================
 // Sinkronisasi Langsung ke Google Sheet
@@ -315,6 +323,27 @@ DapodikClient.prototype.syncGtkToSheet = function(sheet, limit) {
 
   while (true) {
     var resp = this.getGtk(page, limit);
+    if (!resp.rows || resp.rows.length === 0) break;
+    allRows = allRows.concat(resp.rows);
+    if (resp.rows.length < limit) break;
+    page++;
+    Utilities.sleep(100);
+  }
+
+  this.writeToSheet(sheet, allRows);
+  return allRows.length;
+};
+
+/**
+ * Tarik seluruh data prasarana & bangunan dan tulis langsung ke Sheet
+ */
+DapodikClient.prototype.syncPrasaranaToSheet = function(sheet, limit) {
+  limit = limit || 100;
+  var allRows = [];
+  var page = 1;
+
+  while (true) {
+    var resp = this.getPrasarana(page, limit);
     if (!resp.rows || resp.rows.length === 0) break;
     allRows = allRows.concat(resp.rows);
     if (resp.rows.length < limit) break;

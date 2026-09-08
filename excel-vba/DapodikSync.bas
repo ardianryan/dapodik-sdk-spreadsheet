@@ -114,6 +114,44 @@ ErrHandler:
 End Sub
 
 '-------------------------------------------------------------------------------
+' Macro Tarik Prasarana & Bangunan
+'-------------------------------------------------------------------------------
+Public Sub TarikDataPrasarana()
+    Dim client As DapodikClient
+    Dim rawJson As String
+    Dim ws As Worksheet
+    
+    Set client = GetDapodikClientFromSheet()
+    If client Is Nothing Then Exit Sub
+    
+    Application.StatusBar = "Sedang menarik data prasarana dari Dapodik..."
+    Application.ScreenUpdating = False
+    
+    On Error GoTo ErrHandler
+    rawJson = client.GetPrasarana(1, 100)
+    
+    On Error Resume Next
+    Set ws = ThisWorkbook.Sheets("Data Prasarana")
+    On Error GoTo 0
+    If ws Is Nothing Then
+        Set ws = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.Count))
+        ws.Name = "Data Prasarana"
+    End If
+    
+    PopulateJsonToSheet ws, rawJson
+    
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    MsgBox "Data Prasarana berhasil ditarik ke sheet 'Data Prasarana'!", vbInformation, "Dapodik SDK"
+    Exit Sub
+
+ErrHandler:
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    MsgBox "Gagal menarik data prasarana: " & Err.Description, vbCritical, "Dapodik SDK"
+End Sub
+
+'-------------------------------------------------------------------------------
 ' Helper untuk mengisi JSON ke Worksheet
 '-------------------------------------------------------------------------------
 Private Sub PopulateJsonToSheet(ws As Worksheet, jsonText As String)

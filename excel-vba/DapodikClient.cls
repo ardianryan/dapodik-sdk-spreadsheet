@@ -162,6 +162,12 @@ Public Function GetMatevNilai(Optional ByVal semesterId As String = "") As Strin
     GetMatevNilai = Request("GET", "getMatevNilai", q)
 End Function
 
+Public Function GetPrasarana(Optional ByVal page As Long = 1, Optional ByVal limit As Long = 50) As String
+    Dim q As String
+    q = "&page=" & page & "&limit=" & limit
+    GetPrasarana = Request("GET", "getPrasarana", q)
+End Function
+
 Public Function PostNilai(ByVal bodyJson As String, Optional ByVal semesterId As String = "") As String
     Dim q As String
     q = "&table=rapor"
