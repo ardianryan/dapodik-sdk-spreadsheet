@@ -7,13 +7,11 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-'===============================================================================
 ' Class: DapodikClient
 ' Deskripsi: Klien WebService Dapodik Kemendikdasmen untuk Excel VBA
 ' Pengembang: Ryan Ardian <inisaya@ardianryan.com>
 ' Publisher: SMA Negeri 1 Gedeg (@smansagewithai)
 ' Lisensi: MIT
-'===============================================================================
 
 Option Explicit
 
@@ -62,9 +60,7 @@ Public Property Get npsn() As String
     npsn = pNpsn
 End Property
 
-'-------------------------------------------------------------------------------
 ' Request HTTP ke WebService Dapodik
-'-------------------------------------------------------------------------------
 Public Function Request(ByVal method As String, ByVal endpoint As String, Optional ByVal queryParams As String = "", Optional ByVal bodyJson As String = "") As String
     Dim http As Object
     Dim fullUrl As String
@@ -119,9 +115,7 @@ Public Function Request(ByVal method As String, ByVal endpoint As String, Option
     Request = http.responseText
 End Function
 
-'-------------------------------------------------------------------------------
 ' Endpoint Methods
-'-------------------------------------------------------------------------------
 Public Function GetSekolah(Optional ByVal semesterId As String = "") As String
     Dim q As String
     If semesterId <> "" Then q = "&semester_id=" & semesterId

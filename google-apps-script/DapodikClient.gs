@@ -110,8 +110,7 @@ DapodikClient.prototype.request = function(method, endpoint, params, body) {
       "Accept": "application/json, text/plain, */*",
       "User-Agent": "dapodik-sdk-apps-script/1.0.0"
     },
-    muteHttpExceptions: true,
-    validateHttpsCertificates: false
+    muteHttpExceptions: true
   };
 
   if (body) {
