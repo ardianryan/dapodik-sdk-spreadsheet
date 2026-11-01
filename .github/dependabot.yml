@@ -3,5 +3,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "cron"
+      cron: "0 7 28 * *"
+      timezone: "Asia/Jakarta"
     open-pull-requests-limit: 5
